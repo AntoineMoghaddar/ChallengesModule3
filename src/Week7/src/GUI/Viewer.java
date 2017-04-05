@@ -2,21 +2,14 @@ package Week7.src.GUI;
 
 import Week7.src.Utils.Position;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
 
 
 /**
@@ -25,7 +18,8 @@ import javax.swing.WindowConstants;
  *
  */
 public class Viewer implements Runnable {
-	
+
+	private Set<int[]> points;
 	private LinkedBlockingQueue<Position> pos;
 	
 	private static double MAX_X = 200;
@@ -64,12 +58,21 @@ public class Viewer implements Runnable {
 			draw.setColor(Color.RED);
 
 			Position currentPos;
-			while(true){
+			while (true) {
 				currentPos = pos.take();
 				currentPos = getMapPosition(currentPos);
 				draw.drawImage(backup, 0, 0, null);
-				draw.drawImage(point, (int)currentPos.getX()-5, (int)currentPos.getY()-5, null);
+				draw.drawImage(point, (int) currentPos.getX() - 5, (int) currentPos.getY() - 5, null);
 				label.repaint();
+
+				for (int[] p : points) {
+					Position ppos = getMapPosition(new Position(p[0], p[1]));
+					int radius = (p[2] * 10);
+					draw.setColor(new Color(p[3], p[4], p[5]));
+					draw.drawOval((int) (ppos.getX() - radius / 2) - 5, (int) (ppos.getY() - radius / 2) - 5, radius, radius);
+					draw.setColor(new Color(p[3], p[4], p[5], 120));
+					draw.fillOval((int) (ppos.getX() - radius / 2) - 5, (int) (ppos.getY() - radius / 2) - 5, radius, radius);
+				}
 			}
 
 		} catch (IOException | InterruptedException e) {
@@ -77,7 +80,13 @@ public class Viewer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void updatePoints(final HashSet<int[]> update) {
+		SwingUtilities.invokeLater(() -> points = update);
+	}
+
+
+
 	/**
 	 * Translates from map grid coordinates to pixel coordinates used for drawing
 	 * @param pos
