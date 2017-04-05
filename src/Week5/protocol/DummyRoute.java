@@ -5,21 +5,17 @@ package Week5.protocol;
  * Can be extended to include additional data.
  */
 public class DummyRoute {
-    public int destination;
-    public int nextHop;
-    public int cost;
-    public int hops;
+    private int destination, nextHop, cost, hops;
+
 
     public DummyRoute(int destination, int nextHop, int cost, int hops) {
         this.cost = cost;
         this.destination = destination;
         this.nextHop = nextHop;
-    }
-    public boolean knowsDestination(int compare) {
-        return this.destination == compare;
+        this.hops = hops;
     }
 
-    public int pathCost(){
+    public int getCost(){
         return cost;
     }
 
@@ -29,5 +25,10 @@ public class DummyRoute {
 
     public int getNextHop() {
         return nextHop;
+    }
+
+
+    public int getHops() {
+        return hops;
     }
 }

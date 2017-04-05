@@ -81,7 +81,7 @@ public class DummyRoutingProtocol implements IRoutingProtocol {
         HashMap<Integer, Integer> ft = new HashMap<>();
 
         for (Map.Entry<Integer, DummyRoute> entry : myForwardingTable.entrySet()) {
-            ft.put(entry.getKey(), entry.getValue().nextHop);
+            ft.put(entry.getKey(), entry.getValue().getNextHop());
         }
 
         return ft;
