@@ -31,16 +31,15 @@ public class WlanScanner {
 	
 	//Controls if the position is send to the server for viewing on the website.
 	public static boolean sendToWebsite = true;
-	
+
 	//The LocationFinder that is to be used. Replace this with your own implementation!
 	public LocationFinder locationHandler = new AdvancedLocationFinder();
-	
+
 	///////////// Do not edit below this line! ////////////////
 	
 	private LinkedBlockingQueue<MacRssiPair[]> data;
 	private LinkedBlockingQueue<Position> pos;
 	private LinkedBlockingQueue<Position> sendPos;
-	
 	public static void main(String[] args){
 			new WlanScanner();
 	}

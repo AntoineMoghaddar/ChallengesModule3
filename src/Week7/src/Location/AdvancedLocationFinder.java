@@ -4,7 +4,6 @@ import Week7.src.GUI.Viewer;
 import Week7.src.Utils.MacRssiPair;
 import Week7.src.Utils.Position;
 import Week7.src.Utils.Utils;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -20,13 +19,11 @@ public class AdvancedLocationFinder implements LocationFinder {
     private Position myDeltaPos;
     private Position dDeltaPos;
     private String atRouter;
-    private Viewer view;
 
-    public AdvancedLocationFinder(Viewer view) {
+    public AdvancedLocationFinder() {
         routerMap = new HashMap<>();
         atRouter = "";
         myDeltaPos = new Position(0, 0);
-        view = view;
         valid = Utils.getKnownLocations(); //Put the known locations in our hashMap
     }
 
@@ -63,8 +60,8 @@ public class AdvancedLocationFinder implements LocationFinder {
             array[0] = (int) pos.getX();
             array[1] = (int) pos.getY();
             array[2] = (int) Math.ceil(calculateDistance(data[i].getRssi()));
-            array[3] = count <= 0 ? 255 : 0;
-            array[4] = count > 0 ? 255 : 0;
+            array[3] = (count <= 0) ? 255 : 0;
+            array[4] = (count > 0) ? 255 : 0;
             array[5] = 0;
             count--;
             dataSet.add(array);
